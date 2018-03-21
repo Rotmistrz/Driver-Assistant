@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Asystent Kierowcy</string>
+
+    <!-- BUTTONS -->
+
+    <string name="refueling_button">Tankowanie</string>
+    <string name="repairs_button">Naprawy</string>
+    <string name="gallery_button">Galeria</string>
+    <string name="about_vehicle_button">O pojeździe</string>
+</resources>
