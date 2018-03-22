@@ -8,13 +8,15 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Filip on 2018-03-22.
  */
 
 public class FileDatabaseManager {
-    public final static String separator = "|";
+    public final static String SEPARATOR = "|";
 
     private String path;
     private LinkedList<FileDatabaseItem> dataList;
@@ -63,5 +65,13 @@ public class FileDatabaseManager {
         String line = reader.readLine();
 
         return line;
+    }
+
+    public static boolean validate(String str) {
+        Pattern pattern = Pattern.compile("[" + SEPARATOR + "]+");
+
+        Matcher matcher = pattern.matcher(str);
+
+        return !matcher.find();
     }
 }

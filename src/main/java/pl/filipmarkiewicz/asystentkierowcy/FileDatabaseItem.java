@@ -6,5 +6,4 @@ package pl.filipmarkiewicz.asystentkierowcy;
 
 public interface FileDatabaseItem {
     public String toFileLine();
-    public Object createFromFileLine(String line);
 }
