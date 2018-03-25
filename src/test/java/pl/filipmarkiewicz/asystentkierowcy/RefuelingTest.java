@@ -28,4 +28,19 @@ public class RefuelingTest extends TestCase {
 
         assertEquals(sampleCalendar, Refueling.parseDate(sampleDateString));
     }
+
+    @Test
+    public void testCreateFromFileLine() {
+        String line = "40.98|180.23|2018-03-24 15:31:12";
+
+        double amount = 40.98;
+        double price = 180.23;
+        Calendar calendar = new GregorianCalendar(2018, 2, 24, 15, 31, 12);
+
+        Refueling refueling = Refueling.createFromFileLine(line);
+
+        assertEquals(amount, refueling.getAmount());
+        assertEquals(price, refueling.getPrice());
+        assertEquals(calendar, refueling.getDate());
+    }
 }

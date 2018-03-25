@@ -45,13 +45,19 @@ public class Refueling implements FileDatabaseItem {
         return sdf.format(date.getTime());
     }
 
-    public static Calendar parseDate(String str) throws ParseException {
+    public static Calendar parseDate(String str) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        Date date = sdf.parse(str);
+        Calendar calendar;
 
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
+        try {
+            Date date = sdf.parse(str);
+
+            calendar = new GregorianCalendar();
+            calendar.setTime(date);
+        } catch(Exception e) {
+            calendar = null;
+        }
 
         return calendar;
     }
@@ -60,18 +66,19 @@ public class Refueling implements FileDatabaseItem {
         return "";
     }
 
-    public static Object createFromFileLine(String line) {
+    public static Refueling createFromFileLine(String line) {
         String[] data = Base.split(line, FileDatabaseManager.SEPARATOR);
 
         double amount = Double.parseDouble(data[0]);
         double price = Double.parseDouble(data[1]);
 
+        Calendar date = parseDate(data[2]);
 
-        return new Refueling(0, 0, new GregorianCalendar());
+        return new Refueling(amount, price, date);
     }
 
     @Override
     public String toString() {
-        return "";
+        return getDateInStandardFormat(date) + " | " + amount + " l | " + price + " zł";
     }
 }

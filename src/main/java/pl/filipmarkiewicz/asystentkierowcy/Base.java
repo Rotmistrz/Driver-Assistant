@@ -17,7 +17,7 @@ public class Base {
         int x = 0;
 
         while(x < str.length() && (n = str.indexOf(separator, x)) != -1) {
-            System.out.println(n);
+            //System.out.println(n);
             array.add(n);
             x = n + 1;
         }
@@ -25,21 +25,21 @@ public class Base {
         String[] items = new String[array.size() + 1];
 
         items[0] = str.substring(0, array.get(0));
-        System.out.println(items[0]);
+        //System.out.println(items[0]);
         int i = 1;
 
         while(i < array.size()) {
             items[i] = str.substring(array.get(i-1) + separator.length(), array.get(i));
-            System.out.println(items[i]);
+            //System.out.println(items[i]);
             i++;
         }
 
         if(str.endsWith(separator)) {
             items[i] = "";
-            System.out.println(items[i]);
+            //System.out.println(items[i]);
         } else {
             items[i] = str.substring(array.get(i-1) + separator.length());
-            System.out.println(items[i]);
+            //System.out.println(items[i]);
         }
 
         return items;
