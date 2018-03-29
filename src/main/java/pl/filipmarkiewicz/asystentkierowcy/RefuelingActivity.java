@@ -10,11 +10,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
+import java.util.ListIterator;
+
+import pl.filipmarkiewicz.filedatabase.FileDatabaseManager;
+import pl.filipmarkiewicz.filedatabase.FileDatabaseRow;
 
 public class RefuelingActivity extends AppCompatActivity {
 
@@ -40,13 +41,23 @@ public class RefuelingActivity extends AppCompatActivity {
 
         FileDatabaseManager fdm = new FileDatabaseManager("refueling.txt", getApplicationContext());
 
+        Refueling first = new Refueling(1, 40.89, 188.90, new GregorianCalendar(2018, 2, 24, 12, 34, 56));
+        Refueling second = new Refueling(2, 30.21, 140.76, new GregorianCalendar(2018, 2, 29, 20, 21, 45));
+
+        fdm.add(first.toFileDatabaseRow());
+        fdm.add(second.toFileDatabaseRow());
+
+        fdm.write();
+
         try {
-            LinkedList<String> lines = fdm.read();
+            LinkedList<FileDatabaseRow> rows = fdm.read();
             LinkedList<String> list = new LinkedList<String>();
             String current;
 
-            for (String line : lines) {
-                Refueling refueling = Refueling.createFromFileLine(line);
+            ListIterator<FileDatabaseRow> it = rows.listIterator(rows.size());
+
+            while (it.hasPrevious()) {
+                Refueling refueling = Refueling.createFromFileDatabaseRow(it.previous());
 
                 list.add(refueling.toString());
             }

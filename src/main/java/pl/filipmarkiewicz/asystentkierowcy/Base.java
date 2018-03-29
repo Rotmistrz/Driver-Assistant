@@ -45,6 +45,20 @@ public class Base {
         return items;
     }
 
+    public static String implode(String[] data, String glue) {
+        String result = "";
+
+        for (int i = 0; i < data.length; i++) {
+            if (i != 0) {
+                result += glue;
+            }
+
+            result += data[i];
+        }
+
+        return result;
+    }
+
     public static boolean isInt(String str) {
         String pattern = "^[\\-]?[0-9]+$";
         Pattern p = Pattern.compile(pattern);

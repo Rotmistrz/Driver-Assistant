@@ -17,8 +17,36 @@
         style="@style/DarkItem"
         />
 
-    <ListView
-        android:id="@+id/refuelingList"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20px">
+            <Button
+                android:id="@+id/addRefuelingButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/add_refueling_button"
+                />
+
+            <Button
+                android:id="@+id/summaryRefuelingButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/summary_refueling_button"
+                />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/refuelingList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 </LinearLayout>
