@@ -1,5 +1,7 @@
 package pl.filipmarkiewicz.asystentkierowcy;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -39,15 +41,41 @@ public class RefuelingActivity extends AppCompatActivity {
         };**/
 
 
-        FileDatabaseManager fdm = new FileDatabaseManager("refueling.txt", getApplicationContext());
 
-        Refueling first = new Refueling(1, 40.89, 188.90, new GregorianCalendar(2018, 2, 24, 12, 34, 56));
-        Refueling second = new Refueling(2, 30.21, 140.76, new GregorianCalendar(2018, 2, 29, 20, 21, 45));
 
-        fdm.add(first.toFileDatabaseRow());
-        fdm.add(second.toFileDatabaseRow());
+        //Refueling first = new Refueling(1, 40.89, 188.90, new GregorianCalendar(2018, 2, 24, 12, 34, 56));
+        //Refueling second = new Refueling(2, 30.21, 140.76, new GregorianCalendar(2018, 2, 29, 20, 21, 45));
 
-        fdm.write();
+        //fdm.add(first.toFileDatabaseRow());
+        //fdm.add(second.toFileDatabaseRow());
+
+        //fdm.write();
+
+        loadData();
+    }
+
+    public void addRefueling(View view) {
+        Intent manageIntent = new Intent(this, ManageRefuelingActivity.class);
+        manageIntent.putExtra("TYPE", ManageRefuelingActivity.TYPE_ADD);
+        manageIntent.putExtra("ID", 0);
+        manageIntent.putExtra("AMOUNT", 0);
+        manageIntent.putExtra("PRICE", 0);
+        manageIntent.putExtra("DATE", "");
+
+        startActivityForResult(manageIntent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestID, int resultCode, Intent intent) {
+        if (resultCode == ManageRefuelingActivity.RESULT_OK && requestID == 1) {
+            loadData();
+        } else if (resultCode == ManageRefuelingActivity.RESULT_FAILED && requestID == 1) {
+            Toast.makeText(getApplicationContext(), "Wystąpił problem.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void loadData() {
+        FileDatabaseManager fdm = new FileDatabaseManager(Config.REFUELINGS_FILE, getApplicationContext());
 
         try {
             LinkedList<FileDatabaseRow> rows = fdm.read();

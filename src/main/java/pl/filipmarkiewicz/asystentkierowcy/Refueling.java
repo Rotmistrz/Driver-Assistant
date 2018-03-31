@@ -1,9 +1,13 @@
 package pl.filipmarkiewicz.asystentkierowcy;
 
+import android.content.Context;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 
 import pl.filipmarkiewicz.filedatabase.FileDatabaseItem;
 import pl.filipmarkiewicz.filedatabase.FileDatabaseManager;
@@ -44,8 +48,20 @@ public class Refueling implements FileDatabaseItem {
         return this.price;
     }
 
+    public Refueling setPrice(double price) {
+        this.price = price;
+
+        return this;
+    }
+
     public Calendar getDate() {
         return this.date;
+    }
+
+    public Refueling setDate(Calendar date) {
+        this.date = date;
+
+        return this;
     }
 
     static public String getDateInStandardFormat(Calendar date) {
@@ -104,6 +120,49 @@ public class Refueling implements FileDatabaseItem {
 
         return new Refueling(amount, price, date);
     }**/
+
+    @Override
+    public boolean equals(Object another) {
+        if (another == null) {
+            return false;
+        } else if (another == this) {
+            return true;
+        } else if (!(another instanceof Refueling)) {
+            return false;
+        } else {
+            Refueling anotherRefueling = (Refueling) another;
+
+            if (this.getId() == anotherRefueling.getId()
+                    && this.getAmount() == anotherRefueling.getAmount()
+                    && this.getPrice() == anotherRefueling.getPrice()
+                    && this.getDate().equals(anotherRefueling.getDate())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public boolean save(FileDatabaseManager fdm) {
+        try {
+            LinkedList<FileDatabaseRow> rows = fdm.read();
+
+            FileDatabaseRow wanted = fdm.get(this.getId());
+            FileDatabaseRow current = this.toFileDatabaseRow();
+
+            if (wanted == null) {
+                current = fdm.add(current);
+
+                this.id = current.getId();
+            } else {
+                fdm.put(current);
+            }
+
+            return fdm.write();
+        } catch(Exception e) {
+            return false;
+        }
+    }
 
     @Override
     public String toString() {

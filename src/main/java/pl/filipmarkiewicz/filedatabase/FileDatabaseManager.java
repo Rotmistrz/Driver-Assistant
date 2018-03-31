@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +26,7 @@ public class FileDatabaseManager {
 
     private Context context;
     private String filename;
-    private HashMap<Integer, FileDatabaseRow> rows;
+    private TreeMap<Integer, FileDatabaseRow> rows;
 
     private BufferedReader reader;
     private int autoIncrement;
@@ -33,7 +34,7 @@ public class FileDatabaseManager {
     public FileDatabaseManager(String filename, Context context) {
         this.context = context;
         this.filename = filename;
-        this.rows = new HashMap<Integer, FileDatabaseRow>();
+        this.rows = new TreeMap<Integer, FileDatabaseRow>();
         this.autoIncrement = INITIAL_AUTO_INCREMENT;
     }
 
@@ -63,7 +64,7 @@ public class FileDatabaseManager {
 
     public LinkedList<FileDatabaseRow> read() throws IOException, InvalidFileDatabaseLineException, InvalidFileDatabaseFormat {
         this.rows = null;
-        this.rows = new HashMap<Integer, FileDatabaseRow>();
+        this.rows = new TreeMap<Integer, FileDatabaseRow>();
 
         LinkedList<FileDatabaseRow> result = new LinkedList<FileDatabaseRow>();
 
@@ -150,14 +151,14 @@ public class FileDatabaseManager {
         return true;
     }
 
-    public FileDatabaseManager add(FileDatabaseRow row) {
+    public FileDatabaseRow add(FileDatabaseRow row) {
         row.setId(this.autoIncrement);
 
         this.rows.put(this.autoIncrement, row);
 
         this.autoIncrement++;
 
-        return this;
+        return row;
     }
 
     public FileDatabaseManager put(FileDatabaseRow row) {
