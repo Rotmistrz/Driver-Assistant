@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -28,6 +30,20 @@ public class ManageRefuelingActivity extends AppCompatActivity {
 
     private Intent currentIntent;
 
+    private final FuelType[] fuelTypes = {
+            FuelType.UNDEFINED,
+            FuelType.PETROL_PLAIN,
+            FuelType.DIESEL_PLAIN,
+            FuelType.DIESEL_VERVA
+    };
+
+    private final String[] fuelTypesNames = {
+            Refueling.getFuelTypeName(FuelType.UNDEFINED),
+            Refueling.getFuelTypeName(FuelType.PETROL_PLAIN),
+            Refueling.getFuelTypeName(FuelType.DIESEL_PLAIN),
+            Refueling.getFuelTypeName(FuelType.DIESEL_VERVA)
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +61,13 @@ public class ManageRefuelingActivity extends AppCompatActivity {
 
         TextView idView = (TextView) findViewById(R.id.refuelingId);
 
+        Spinner fuelTypeView = (Spinner) findViewById(R.id.refuelingFuelType);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, fuelTypesNames);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        fuelTypeView.setAdapter(adapter);
+
         if (type == TYPE_EDIT) {
             id = currentIntent.getIntExtra("ID", 0);
             amount = currentIntent.getDoubleExtra("AMOUNT", 0);
@@ -60,7 +83,13 @@ public class ManageRefuelingActivity extends AppCompatActivity {
         double amount = Double.parseDouble(((TextView) findViewById(R.id.refuelingAmount)).getText().toString());
         double price = Double.parseDouble(((TextView) findViewById(R.id.refuelingPrice)).getText().toString());
 
-        Refueling result = new Refueling(id, amount, price, new GregorianCalendar());
+        Spinner fuelTypeView = findViewById(R.id.refuelingFuelType);
+
+        int selectedFuelTypePosition = fuelTypeView.getSelectedItemPosition();
+
+        FuelType fuelType = fuelTypes[selectedFuelTypePosition];
+
+        Refueling result = new Refueling(id, fuelType, amount, price, new GregorianCalendar());
 
         FileDatabaseManager fdm = new FileDatabaseManager(Config.REFUELINGS_FILE, getApplicationContext());
 
@@ -72,9 +101,9 @@ public class ManageRefuelingActivity extends AppCompatActivity {
             resultState = RESULT_FAILED;
         }
 
-        currentIntent.putExtra("resultId", result.getId());
-        currentIntent.putExtra("resultAmount", result.getAmount());
-        currentIntent.putExtra("resultPrice", result.getPrice());
+        //currentIntent.putExtra("resultId", result.getId());
+        //currentIntent.putExtra("resultAmount", result.getAmount());
+        //currentIntent.putExtra("resultPrice", result.getPrice());
 
         setResult(resultState, currentIntent);
         finish();

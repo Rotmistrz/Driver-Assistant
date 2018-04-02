@@ -36,12 +36,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
+                android:textSize="0px"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rodzaj paliwa:"
+                />
+
+            <Spinner
+                android:id="@+id/refuelingFuelType"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20px"
+                android:paddingBottom="20px"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ilość: [l]"
+                android:layout_marginTop="20px"
                 />
 
             <EditText
@@ -53,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cena: [zł]"
+                android:layout_marginTop="20px"
                 />
 
             <EditText
@@ -60,11 +77,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <TextView
+            <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Data:"
-                />
+                />-->
 
             <Button
                 android:id="@+id/submitButton"
@@ -72,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="submit"
                 android:text="Akceptuj"
+                android:layout_marginTop="40px"
                 />
 
         </LinearLayout>

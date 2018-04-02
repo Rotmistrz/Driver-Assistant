@@ -51,6 +51,7 @@ public class RefuelingTest extends TestCase {
     public void testCreateFromFileDatabaseRow() {
         int id = 1;
         String[] data = {
+                "3",
                 "40.98",
                 "180.23",
                 "2018-03-24 15:31:12"
@@ -59,16 +60,16 @@ public class RefuelingTest extends TestCase {
         FileDatabaseRow row = new FileDatabaseRow(id, data);
 
         Refueling refueling = Refueling.createFromFileDatabaseRow(row);
-        Refueling pattern = new Refueling(1, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 31, 12));
+        Refueling pattern = new Refueling(1, FuelType.DIESEL_VERVA, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 31, 12));
 
         assertEquals(refueling, pattern);
     }
 
     @Test
     public void testEquals() {
-        Refueling refueling = new Refueling(1, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 31, 12));
-        Refueling another = new Refueling(1, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 31, 12));
-        Refueling other = new Refueling(1, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 12, 23));
+        Refueling refueling = new Refueling(1, FuelType.DIESEL_VERVA, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 31, 12));
+        Refueling another = new Refueling(1, FuelType.DIESEL_VERVA, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 31, 12));
+        Refueling other = new Refueling(1, FuelType.DIESEL_PLAIN, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 12, 23));
 
         assertTrue(refueling.equals(another));
         assertFalse(refueling.equals(other));
@@ -80,13 +81,13 @@ public class RefuelingTest extends TestCase {
 
         FileDatabaseManager fdm = new FileDatabaseManager("testfile.txt", context);
 
-        Refueling firstTestRefueling = new Refueling(1, 30.45, 120.34,
+        Refueling firstTestRefueling = new Refueling(1, FuelType.DIESEL_VERVA, 30.45, 120.34,
                 new GregorianCalendar(2018, 2, 27, 11, 2, 8));
 
-        Refueling secondTestRefueling = new Refueling(2, 20.45, 100.34,
+        Refueling secondTestRefueling = new Refueling(2, FuelType.DIESEL_PLAIN, 20.45, 100.34,
                 new GregorianCalendar(2018, 2, 31, 17, 8, 12));
 
-        Refueling thirdTestRefueling = new Refueling(3, 25.15, 110.10,
+        Refueling thirdTestRefueling = new Refueling(3, FuelType.DIESEL_VERVA, 25.15, 110.10,
                 new GregorianCalendar(2018, 3, 4, 12, 18, 21));
 
         fdm.add(firstTestRefueling.toFileDatabaseRow());
@@ -117,10 +118,12 @@ public class RefuelingTest extends TestCase {
             assertEquals(second, secondTestRefueling);
             assertEquals(third, thirdTestRefueling);
 
+            FuelType oldFuelType = secondTestRefueling.getFuelType();
             double oldAmount = secondTestRefueling.getAmount();
             double oldPrice = secondTestRefueling.getPrice();
             Calendar oldDate = secondTestRefueling.getDate();
 
+            secondTestRefueling.setFuelType(FuelType.DIESEL_VERVA);
             secondTestRefueling.setAmount(23.45);
             secondTestRefueling.setPrice(112.34);
             secondTestRefueling.setDate(new GregorianCalendar(2018, 2, 30, 16, 12, 1));
@@ -142,6 +145,7 @@ public class RefuelingTest extends TestCase {
             assertEquals(second, secondTestRefueling);
             assertEquals(third, thirdTestRefueling);
 
+            assertNotEquals(second.getFuelType(), oldFuelType);
             assertNotEquals(second.getAmount(), oldAmount);
             assertNotEquals(second.getPrice(), oldPrice);
             assertNotEquals(second.getDate(), oldDate);
