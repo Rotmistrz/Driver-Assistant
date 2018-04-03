@@ -72,7 +72,7 @@ public class ManageRefuelingActivity extends AppCompatActivity {
             id = currentIntent.getIntExtra("ID", 0);
             amount = currentIntent.getDoubleExtra("AMOUNT", 0);
             price = currentIntent.getDoubleExtra("PRICE", 0);
-            date = Refueling.parseDate(currentIntent.getStringExtra("DATE"));
+            date = Base.parseDate(currentIntent.getStringExtra("DATE"));
         } else {
             idView.setText(0 + "");
         }

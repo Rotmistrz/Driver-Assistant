@@ -1,9 +1,5 @@
 package pl.filipmarkiewicz.asystentkierowcy;
 
-/**
- * Created by Filip on 2018-03-21.
- */
-
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
@@ -13,57 +9,67 @@ import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 
 import pl.filipmarkiewicz.filedatabase.FileDatabaseManager;
 import pl.filipmarkiewicz.filedatabase.FileDatabaseRow;
 
-import junit.framework.TestCase;
-
-import org.junit.Test;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
-
-import pl.filipmarkiewicz.filedatabase.FileDatabaseRow;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Created by Filip on 2018-04-04.
+ */
 
-public class RefuelingTest extends TestCase {
+public class RepairTest extends TestCase {
 
     @Test
     public void testCreateFromFileDatabaseRow() {
         int id = 1;
         String[] data = {
-                "3",
-                "40.98",
-                "180.23",
-                "2018-03-24 15:31:12"
+                "1",
+                "Wymiana okładzin w tylnych hamulcach",
+                "150",
+                "2018-03-24 15:31:12",
+                "180.67",
+                "Strasznie piszczą hamulce tylne. Prawdopodobnnie wykładziny są już strasznie wyjechane."
         };
 
         FileDatabaseRow row = new FileDatabaseRow(id, data);
 
-        Refueling refueling = Refueling.createFromFileDatabaseRow(row);
-        Refueling pattern = new Refueling(1, FuelType.DIESEL_VERVA, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 31, 12));
+        Repair repair = Repair.createFromFileDatabaseRow(row);
 
-        assertEquals(refueling, pattern);
+        Repair pattern = new Repair(1, true, "Wymiana okładzin w tylnych hamulcach", 150);
+        pattern.setDoneDate(new GregorianCalendar(2018, 2, 24, 15, 31, 12));
+        pattern.setFinalPrice(180.67);
+        pattern.setDescription("Strasznie piszczą hamulce tylne. Prawdopodobnnie wykładziny są już strasznie wyjechane.");
+
+        assertEquals(repair, pattern);
     }
 
     @Test
     public void testEquals() {
-        Refueling refueling = new Refueling(1, FuelType.DIESEL_VERVA, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 31, 12));
-        Refueling another = new Refueling(1, FuelType.DIESEL_VERVA, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 31, 12));
-        Refueling other = new Refueling(1, FuelType.DIESEL_PLAIN, 40.98, 180.23, new GregorianCalendar(2018, 2, 24, 15, 12, 23));
+        Repair repair = new Repair(1, true, "Wymiana okładzin w tylnych hamulcach", 150);
+        repair.setDoneDate(new GregorianCalendar(2018, 2, 24, 15, 31, 12));
+        repair.setFinalPrice(180.67);
+        repair.setDescription("Strasznie piszczą hamulce tylne. Prawdopodobnnie wykładziny są już strasznie wyjechane.");
 
-        assertTrue(refueling.equals(another));
-        assertFalse(refueling.equals(other));
+        Repair pattern = new Repair(1, true, "Wymiana okładzin w tylnych hamulcach", 150);
+        pattern.setDoneDate(new GregorianCalendar(2018, 2, 24, 15, 31, 12));
+        pattern.setFinalPrice(180.67);
+        pattern.setDescription("Strasznie piszczą hamulce tylne. Prawdopodobnnie wykładziny są już strasznie wyjechane.");
+
+        Repair wrongPattern = new Repair(1, false, "Wymiana okładzin w tylnych hamulcach.", 150);
+        wrongPattern.setDoneDate(new GregorianCalendar(2018, 2, 24, 15, 31, 12));
+        wrongPattern.setFinalPrice(180.67);
+        wrongPattern.setDescription("Strasznie piszczą hamulce tylne. Prawdopodobnnie wykładziny są już strasznie wyjechane.");
+
+        assertTrue(repair.equals(pattern));
+        assertFalse(repair.equals(wrongPattern));
     }
 
     @Test
     public void testSave() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        /**Context context = InstrumentationRegistry.getTargetContext();
 
         FileDatabaseManager fdm = new FileDatabaseManager("testfile.txt", context);
 
@@ -137,6 +143,6 @@ public class RefuelingTest extends TestCase {
             assertNotEquals(second.getDate(), oldDate);
         } catch (Exception e) {
             fail("Failure during reading the file.");
-        }
+        }**/
     }
 }

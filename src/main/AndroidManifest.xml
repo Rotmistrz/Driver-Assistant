@@ -19,7 +19,8 @@
         <activity android:name=".RefuelingActivity" />
         <activity android:name=".AboutVehicleActivity" />
         <activity android:name=".ManageAboutVehicleDataActivity" />
-        <activity android:name=".ManageRefuelingActivity"></activity>
+        <activity android:name=".ManageRefuelingActivity" />
+        <activity android:name=".RepairsActivity"></activity>
     </application>
 
 </manifest>

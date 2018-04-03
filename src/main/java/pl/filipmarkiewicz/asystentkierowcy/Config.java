@@ -6,4 +6,5 @@ package pl.filipmarkiewicz.asystentkierowcy;
 
 public class Config {
     public static final String REFUELINGS_FILE = "refuelins.txt";
+    public static final String REPAIRS_FILE = "repairs.txt";
 }

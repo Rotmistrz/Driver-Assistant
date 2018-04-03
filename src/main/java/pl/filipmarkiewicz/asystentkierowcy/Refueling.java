@@ -100,36 +100,13 @@ public class Refueling implements FileDatabaseItem {
         }
     }
 
-    static public String getDateInStandardFormat(Calendar date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        return sdf.format(date.getTime());
-    }
-
-    public static Calendar parseDate(String str) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        Calendar calendar;
-
-        try {
-            Date date = sdf.parse(str);
-
-            calendar = new GregorianCalendar();
-            calendar.setTime(date);
-        } catch(Exception e) {
-            calendar = null;
-        }
-
-        return calendar;
-    }
-
     @Override
     public FileDatabaseRow toFileDatabaseRow() {
         String[] data = {
                 this.getFuelType().getId() + "",
                 this.getAmount() + "",
                 this.getPrice() + "",
-                this.getDateInStandardFormat(this.getDate())
+                Base.getDateInStandardFormat(this.getDate())
         };
 
         FileDatabaseRow row = new FileDatabaseRow(this.id, data);
@@ -143,7 +120,7 @@ public class Refueling implements FileDatabaseItem {
         FuelType fuelType = FuelType.parseType(row.get(0));
         double amount = Double.parseDouble(row.get(1));
         double price = Double.parseDouble(row.get(2));
-        Calendar calendar = parseDate(row.get(3));
+        Calendar calendar = Base.parseDate(row.get(3));
 
         return new Refueling(id, fuelType, amount, price, calendar);
     }
@@ -205,6 +182,6 @@ public class Refueling implements FileDatabaseItem {
 
     @Override
     public String toString() {
-        return getFuelTypeSymbol(fuelType) + " | " + getDateInStandardFormat(date) + " | " + amount + " l | " + price + " zł";
+        return getFuelTypeSymbol(fuelType) + " | " + Base.getDateInStandardFormat(date) + " | " + amount + " l | " + price + " zł";
     }
 }

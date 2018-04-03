@@ -4,6 +4,7 @@ package pl.filipmarkiewicz.asystentkierowcy;
  * Created by Filip on 2018-03-22.
  */
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,6 +58,37 @@ public class Base {
         }
 
         return result;
+    }
+
+    static public String getDateInStandardFormat(Calendar date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        return sdf.format(date.getTime());
+    }
+
+    public static Calendar parseDate(String str) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Calendar calendar;
+
+        try {
+            Date date = sdf.parse(str);
+
+            calendar = new GregorianCalendar();
+            calendar.setTime(date);
+        } catch(Exception e) {
+            calendar = null;
+        }
+
+        return calendar;
+    }
+
+    public static boolean getBooleanOfString(String str) {
+        return (str != "0") ? true : false;
+    }
+
+    public static String parseBoolean(boolean something) {
+        return (something) ? "1" : "0";
     }
 
     public static boolean isInt(String str) {

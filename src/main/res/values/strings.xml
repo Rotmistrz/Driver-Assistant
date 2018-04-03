@@ -10,4 +10,7 @@
 
     <string name="add_refueling_button">Zatankuj</string>
     <string name="summary_refueling_button">Podsumowanie</string>
+
+    <string name="add_repair_button">Dodaj naprawę</string>
+    <string name="summary_button">Podsumowanie</string>
 </resources>
