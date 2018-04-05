@@ -17,6 +17,8 @@ public class BaseTest extends TestCase {
         Calendar calendar = new GregorianCalendar(2018, 2, 21, 23, 6, 1);
 
         assertEquals("2018-03-21 23:06:01", Base.getDateInStandardFormat(calendar));
+
+        assertEquals("", Base.getDateInStandardFormat(null));
     }
 
     @Test
@@ -25,5 +27,23 @@ public class BaseTest extends TestCase {
         Calendar sampleCalendar = new GregorianCalendar(2018, 2, 22, 22, 57, 12);
 
         assertEquals(sampleCalendar, Base.parseDate(sampleDateString));
+
+        assertEquals(Base.parseDate(""), null);
+    }
+
+    @Test
+    public void testBoolean() throws Exception {
+        boolean hop = true;
+
+        String str = Base.parseBoolean(hop);
+
+        assertEquals(str, "1");
+
+        String siup = "0";
+
+        boolean lala = Base.getBooleanOfString(siup);
+
+        assertFalse(lala);
+        assertTrue(Base.getBooleanOfString("1"));
     }
 }

@@ -6,4 +6,5 @@ package pl.filipmarkiewicz.filedatabase;
 
 public interface FileDatabaseItem {
     public FileDatabaseRow toFileDatabaseRow();
+    public boolean save(FileDatabaseManager fdm);
 }

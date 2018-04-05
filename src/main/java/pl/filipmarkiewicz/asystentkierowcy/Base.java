@@ -61,21 +61,29 @@ public class Base {
     }
 
     static public String getDateInStandardFormat(Calendar date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (date == null) {
+            return "";
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        return sdf.format(date.getTime());
+            return sdf.format(date.getTime());
+        }
     }
 
     public static Calendar parseDate(String str) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         Calendar calendar;
 
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             Date date = sdf.parse(str);
 
-            calendar = new GregorianCalendar();
-            calendar.setTime(date);
+            if (date == null) {
+                return null;
+            } else {
+                calendar = new GregorianCalendar();
+                calendar.setTime(date);
+            }
         } catch(Exception e) {
             calendar = null;
         }
@@ -84,7 +92,7 @@ public class Base {
     }
 
     public static boolean getBooleanOfString(String str) {
-        return (str != "0") ? true : false;
+        return (!str.equals("0")) ? true : false;
     }
 
     public static String parseBoolean(boolean something) {

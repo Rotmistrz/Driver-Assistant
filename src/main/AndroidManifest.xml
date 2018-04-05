@@ -20,7 +20,8 @@
         <activity android:name=".AboutVehicleActivity" />
         <activity android:name=".ManageAboutVehicleDataActivity" />
         <activity android:name=".ManageRefuelingActivity" />
-        <activity android:name=".RepairsActivity"></activity>
+        <activity android:name=".RepairsActivity" />
+        <activity android:name=".ManageRepairActivity"></activity>
     </application>
 
 </manifest>

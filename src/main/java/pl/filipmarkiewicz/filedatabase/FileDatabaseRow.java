@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import pl.filipmarkiewicz.asystentkierowcy.Base;
+import pl.filipmarkiewicz.asystentkierowcy.Repair;
 
 /**
  * Created by Filip on 2018-03-26.
@@ -63,6 +64,27 @@ public class FileDatabaseRow {
             return new FileDatabaseRow(id, data);
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public boolean equals(Object another) {
+        if (another == null) {
+            return false;
+        } else if (another == this) {
+            return true;
+        } else if (!(another instanceof FileDatabaseRow)) {
+            return false;
+        } else {
+            FileDatabaseRow anotherRow = (FileDatabaseRow) another;
+
+            if (this.getId() == anotherRow.getId()
+                    && Arrays.equals(this.getData(), anotherRow.getData())) {
+
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

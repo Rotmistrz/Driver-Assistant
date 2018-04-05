@@ -47,6 +47,28 @@ public class RepairTest extends TestCase {
     }
 
     @Test
+    public void testToFileDatabaseRow() {
+        Repair repair = new Repair(1, false, "Hop siup", 120.34);
+        repair.setFinalPrice(140);
+        repair.setDoneDate(new GregorianCalendar(2018, 3, 4, 20, 3, 4));
+
+        String[] data = {
+                "0",
+                "Hop siup",
+                "120.34",
+                "2018-04-04 20:03:04",
+                "140.0",
+                ""
+        };
+
+        FileDatabaseRow row = new FileDatabaseRow(1, data);
+
+        FileDatabaseRow createdRow = repair.toFileDatabaseRow();
+
+        assertEquals(row, createdRow);
+    }
+
+    @Test
     public void testEquals() {
         Repair repair = new Repair(1, true, "Wymiana okładzin w tylnych hamulcach", 150);
         repair.setDoneDate(new GregorianCalendar(2018, 2, 24, 15, 31, 12));
@@ -69,80 +91,77 @@ public class RepairTest extends TestCase {
 
     @Test
     public void testSave() {
-        /**Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getTargetContext();
 
-        FileDatabaseManager fdm = new FileDatabaseManager("testfile.txt", context);
+        FileDatabaseManager fdm = new FileDatabaseManager("testfile-02.txt", context);
 
-        Refueling firstTestRefueling = new Refueling(1, FuelType.DIESEL_VERVA, 30.45, 120.34,
-                new GregorianCalendar(2018, 2, 27, 11, 2, 8));
+        Repair firstTestRepair = new Repair(1, false, "Wymiana opon", 130);
 
-        Refueling secondTestRefueling = new Refueling(2, FuelType.DIESEL_PLAIN, 20.45, 100.34,
-                new GregorianCalendar(2018, 2, 31, 17, 8, 12));
+        Repair secondTestRepair = new Repair(2, false, "Naprawa tylnych hamulców", 250.34);
 
-        Refueling thirdTestRefueling = new Refueling(3, FuelType.DIESEL_VERVA, 25.15, 110.10,
-                new GregorianCalendar(2018, 3, 4, 12, 18, 21));
+        Repair thirdTestRepair = new Repair(3, false, "Wymiana uszczelki na kielichach", 125.15);
 
-        fdm.add(firstTestRefueling.toFileDatabaseRow());
-        fdm.add(secondTestRefueling.toFileDatabaseRow());
+        fdm.add(firstTestRepair.toFileDatabaseRow());
+        fdm.add(secondTestRepair.toFileDatabaseRow());
 
         assertTrue(fdm.write());
 
         assertEquals(fdm.getAutoIncrement(), 3);
 
-        assertTrue(thirdTestRefueling.save(fdm));
+        assertTrue(thirdTestRepair.save(fdm));
 
-        assertEquals(thirdTestRefueling.getId(), 3);
+        assertEquals(thirdTestRepair.getId(), 3);
 
         assertEquals(fdm.getAutoIncrement(), 4);
 
         try {
             LinkedList<FileDatabaseRow> rows = fdm.read();
 
-            FileDatabaseRow firstRow = rows.get(firstTestRefueling.getId() - 1);
-            FileDatabaseRow secondRow = rows.get(secondTestRefueling.getId() - 1);
-            FileDatabaseRow thirdRow = rows.get(thirdTestRefueling.getId() - 1);
+            FileDatabaseRow firstRow = rows.get(firstTestRepair.getId() - 1);
+            FileDatabaseRow secondRow = rows.get(secondTestRepair.getId() - 1);
+            FileDatabaseRow thirdRow = rows.get(thirdTestRepair.getId() - 1);
 
-            Refueling first = Refueling.createFromFileDatabaseRow(firstRow);
-            Refueling second = Refueling.createFromFileDatabaseRow(secondRow);
-            Refueling third = Refueling.createFromFileDatabaseRow(thirdRow);
+            Repair first = Repair.createFromFileDatabaseRow(firstRow);
+            Repair second = Repair.createFromFileDatabaseRow(secondRow);
+            Repair third = Repair.createFromFileDatabaseRow(thirdRow);
 
-            assertEquals(first, firstTestRefueling);
-            assertEquals(second, secondTestRefueling);
-            assertEquals(third, thirdTestRefueling);
+            assertEquals(first, firstTestRepair);
+            assertEquals(second, secondTestRepair);
+            assertEquals(third, thirdTestRepair);
 
-            FuelType oldFuelType = secondTestRefueling.getFuelType();
-            double oldAmount = secondTestRefueling.getAmount();
-            double oldPrice = secondTestRefueling.getPrice();
-            Calendar oldDate = secondTestRefueling.getDate();
+            boolean oldIsDone = secondTestRepair.isDone();
+            double oldExpectedPrice = secondTestRepair.getExpectedPrice();
+            String oldName = secondTestRepair.getName();
+            double oldFinalPrice = secondTestRepair.getFinalPrice();
 
-            secondTestRefueling.setFuelType(FuelType.DIESEL_VERVA);
-            secondTestRefueling.setAmount(23.45);
-            secondTestRefueling.setPrice(112.34);
-            secondTestRefueling.setDate(new GregorianCalendar(2018, 2, 30, 16, 12, 1));
+            secondTestRepair.setDone(true);
+            secondTestRepair.setName("Zmieniono nazwę");
+            secondTestRepair.setExpectedPrice(280.12);
+            secondTestRepair.setFinalPrice(380.90);
 
-            assertTrue(secondTestRefueling.save(fdm));
+            assertTrue(secondTestRepair.save(fdm));
 
             rows = null;
             rows = fdm.read();
 
-            firstRow = rows.get(firstTestRefueling.getId() - 1);
-            secondRow = rows.get(secondTestRefueling.getId() - 1);
-            thirdRow = rows.get(thirdTestRefueling.getId() - 1);
+            firstRow = rows.get(firstTestRepair.getId() - 1);
+            secondRow = rows.get(secondTestRepair.getId() - 1);
+            thirdRow = rows.get(thirdTestRepair.getId() - 1);
 
-            first = Refueling.createFromFileDatabaseRow(firstRow);
-            second = Refueling.createFromFileDatabaseRow(secondRow);
-            third = Refueling.createFromFileDatabaseRow(thirdRow);
+            first = Repair.createFromFileDatabaseRow(firstRow);
+            second = Repair.createFromFileDatabaseRow(secondRow);
+            third = Repair.createFromFileDatabaseRow(thirdRow);
 
-            assertEquals(first, firstTestRefueling);
-            assertEquals(second, secondTestRefueling);
-            assertEquals(third, thirdTestRefueling);
+            assertEquals(first, firstTestRepair);
+            assertEquals(second, secondTestRepair);
+            assertEquals(third, thirdTestRepair);
 
-            assertNotEquals(second.getFuelType(), oldFuelType);
-            assertNotEquals(second.getAmount(), oldAmount);
-            assertNotEquals(second.getPrice(), oldPrice);
-            assertNotEquals(second.getDate(), oldDate);
+            assertNotEquals(second.isDone(), oldIsDone);
+            assertNotEquals(second.getExpectedPrice(), oldExpectedPrice);
+            assertNotEquals(second.getName(), oldName);
+            assertNotEquals(second.getFinalPrice(), oldFinalPrice);
         } catch (Exception e) {
-            fail("Failure during reading the file.");
-        }**/
+            fail("Failure during reading the file." + e);
+        }
     }
 }

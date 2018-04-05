@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="pl.filipmarkiewicz.asystentkierowcy.HomeActivity"
-        android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pl.filipmarkiewicz.asystentkierowcy.ManageRepairActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/mainToolbar"
@@ -16,6 +14,7 @@
         android:theme="@style/ThemeOverlay.MyApp.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
         style="@style/DarkItem"
+        android:layout_marginBottom="20px"
         />
 
     <ScrollView android:layout_width="match_parent"
@@ -27,43 +26,57 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="pl.filipmarkiewicz.asystentkierowcy.HomeActivity"
+            tools:context="pl.filipmarkiewicz.asystentkierowcy.ManageRepairActivity"
             android:orientation="vertical"
-            android:layout_marginTop="40px">
-            <Button
-                android:id="@+id/refuelingButton"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/repairId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/refueling_button"
-                android:onClick="invokeRefuelingActivity"
+                android:visibility="invisible"
+                android:textSize="0px"
                 />
 
-            <Button
-                android:id="@+id/repairsButton"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/repairs_button"
-                android:onClick="invokeRepairsActivity"
+                android:text="Nazwa:"
+                android:layout_marginTop="20px"
                 />
 
-            <Button
-                android:id="@+id/galleryButton"
+            <EditText
+                android:id="@+id/repairName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/gallery_button"
+                android:text="Przewidywany koszt:"
+                android:layout_marginTop="20px"
                 />
 
-            <Button
-                android:id="@+id/aboutVehicleButton"
+            <EditText
+                android:id="@+id/repairExpectedPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/about_vehicle_button"
-                android:onClick="invokeAboutVehicleActivity"
+                android:text="Data:"
+                />-->
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="submit"
+                android:text="Akceptuj"
+                android:layout_marginTop="40px"
                 />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

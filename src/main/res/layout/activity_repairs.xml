@@ -42,8 +42,29 @@
                 />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Naprawy zaplanowane:"
+            android:layout_marginTop="20px"
+            android:layout_marginBottom="10px"
+            />
+
         <ListView
-            android:id="@+id/repairsList"
+            android:id="@+id/plannedRepairsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Naprawy dokonane:"
+            android:layout_marginTop="40px"
+            android:layout_marginBottom="10px"
+            />
+
+        <ListView
+            android:id="@+id/doneRepairsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

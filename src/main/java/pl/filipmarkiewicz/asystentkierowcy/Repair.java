@@ -1,8 +1,10 @@
 package pl.filipmarkiewicz.asystentkierowcy;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 
 import pl.filipmarkiewicz.filedatabase.FileDatabaseItem;
+import pl.filipmarkiewicz.filedatabase.FileDatabaseManager;
 import pl.filipmarkiewicz.filedatabase.FileDatabaseRow;
 
 /**
@@ -23,6 +25,10 @@ public class Repair implements FileDatabaseItem {
         this.done = done;
         this.name = name;
         this.expectedPrice = expectedPrice;
+
+        this.finalPrice = 0.0;
+        this.doneDate = null;
+        this.description = "";
     }
 
     public FileDatabaseRow toFileDatabaseRow() {
@@ -73,12 +79,17 @@ public class Repair implements FileDatabaseItem {
 
             if (this.getId() == anotherRepair.getId()
                     && this.isDone() == anotherRepair.isDone()
-                    && this.getName() == anotherRepair.getName()
+                    && this.getName().equals(anotherRepair.getName())
                     && this.getExpectedPrice() == anotherRepair.getExpectedPrice()
-                    && this.getDoneDate().equals(anotherRepair.getDoneDate())
                     && this.getFinalPrice() == anotherRepair.getFinalPrice()
-                    && this.getDescription() == anotherRepair.getDescription()) {
-                return true;
+                    && this.getDescription().equals(anotherRepair.getDescription())) {
+
+                    if (this.getDoneDate() == null && anotherRepair.getDoneDate() == null
+                            || (this.getDoneDate() != null && this.getDoneDate().equals(anotherRepair.getDoneDate()))) {
+                        return true;
+                    } else {
+                        return false;
+                    }
             } else {
                 return false;
             }
@@ -147,5 +158,39 @@ public class Repair implements FileDatabaseItem {
         this.finalPrice = finalPrice;
 
         return this;
+    }
+
+    @Override
+    public boolean save(FileDatabaseManager fdm) {
+        try {
+            LinkedList<FileDatabaseRow> rows = fdm.read();
+
+            FileDatabaseRow wanted = fdm.get(this.getId());
+            FileDatabaseRow current = this.toFileDatabaseRow();
+
+            if (wanted == null) {
+                current = fdm.add(current);
+
+                this.id = current.getId();
+            } else {
+                fdm.put(current);
+            }
+
+            return fdm.write();
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
+    public String toString() {
+        String result;
+
+        if (isDone()) {
+            result = this.name + " - " + this.getFinalPrice() + "zł";
+        } else {
+            result = this.name + " - " + this.getExpectedPrice() + "zł";
+        }
+
+        return result;
     }
 }

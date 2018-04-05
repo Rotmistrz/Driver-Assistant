@@ -25,6 +25,12 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(refuelingIntent);
     }
 
+    public void invokeRepairsActivity(View view) {
+        final Intent repairsIntent = new Intent(this, RepairsActivity.class);
+
+        startActivity(repairsIntent);
+    }
+
     public void invokeAboutVehicleActivity(View view) {
         final Intent aboutVehicleIntent = new Intent(this, AboutVehicleActivity.class);
 

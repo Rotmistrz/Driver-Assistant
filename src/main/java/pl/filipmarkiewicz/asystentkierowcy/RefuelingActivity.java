@@ -27,6 +27,7 @@ public class RefuelingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_refueling);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
+        toolbar.setTitle("Tankowania");
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -39,9 +40,6 @@ public class RefuelingActivity extends AppCompatActivity {
                 "2 stycznia 2018 | 35,56 l | 143,23 zł",
                 "20 grudnia 2017 | 39,12 l | 176,49zł"
         };**/
-
-
-
 
         //Refueling first = new Refueling(1, 40.89, 188.90, new GregorianCalendar(2018, 2, 24, 12, 34, 56));
         //Refueling second = new Refueling(2, 30.21, 140.76, new GregorianCalendar(2018, 2, 29, 20, 21, 45));
