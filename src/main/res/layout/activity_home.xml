@@ -64,6 +64,15 @@
                 android:text="@string/about_vehicle_button"
                 android:onClick="invokeAboutVehicleActivity"
                 />
+
+            <Button
+                android:id="@+id/aboutAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/about_author_button"
+                android:onClick="invokeAboutAuthor"
+                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

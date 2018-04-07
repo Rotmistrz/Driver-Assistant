@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.filipmarkiewicz.asystentkierowcy.ManageRepairActivity">
+    tools:context="pl.filipmarkiewicz.asystentkierowcy.ManageRepairActivity"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/mainToolbar"
@@ -61,12 +62,6 @@
                 android:id="@+id/repairExpectedPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-            <!--<TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Data:"
-                />-->
 
             <Button
                 android:id="@+id/submitButton"

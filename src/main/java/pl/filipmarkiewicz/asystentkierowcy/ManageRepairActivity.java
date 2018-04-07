@@ -44,6 +44,8 @@ public class ManageRepairActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        currentIntent = getIntent();
+
         type = currentIntent.getIntExtra("TYPE", 0);
 
         TextView idView = (TextView) findViewById(R.id.repairId);

@@ -1,6 +1,7 @@
 package pl.filipmarkiewicz.asystentkierowcy;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -32,8 +33,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void invokeAboutVehicleActivity(View view) {
-        final Intent aboutVehicleIntent = new Intent(this, AboutVehicleActivity.class);
+        String action = "pl.filipmarkiewicz.asystentkierowcy.intent.action.InvokeAboutVehicle";
+
+        final Intent aboutVehicleIntent = new Intent(action);
 
         startActivity(aboutVehicleIntent);
+    }
+
+    public void invokeAboutAuthor(View view) {
+        final Intent aboutAuthorIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://filipmarkiewicz.pl"));
+
+        startActivity(aboutAuthorIntent);
     }
 }

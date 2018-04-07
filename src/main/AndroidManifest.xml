@@ -17,7 +17,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".RefuelingActivity" />
-        <activity android:name=".AboutVehicleActivity" />
+        <activity android:name=".AboutVehicleActivity">
+            <intent-filter>
+                <action android:name="pl.filipmarkiewicz.asystentkierowcy.intent.action.InvokeAboutVehicle" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ManageAboutVehicleDataActivity" />
         <activity android:name=".ManageRefuelingActivity" />
         <activity android:name=".RepairsActivity" />

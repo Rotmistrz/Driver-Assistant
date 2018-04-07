@@ -7,6 +7,7 @@
     <string name="repairs_button">Naprawy</string>
     <string name="gallery_button">Galeria</string>
     <string name="about_vehicle_button">O pojeździe</string>
+    <string name="about_author_button">O autorze</string>
 
     <string name="add_refueling_button">Zatankuj</string>
     <string name="summary_refueling_button">Podsumowanie</string>
